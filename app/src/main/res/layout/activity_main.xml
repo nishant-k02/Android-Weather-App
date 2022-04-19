@@ -137,28 +137,28 @@
             app:layout_constraintTop_toBottomOf="@+id/city" />
 
         <TextView
-            android:id="@+id/longitude"
+            android:id="@+id/latitute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
-            android:text="TextView"
+            android:text=""
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/city" />
 
         <TextView
-            android:id="@+id/latitude"
+            android:id="@+id/longitude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            android:text="TextView"
+            android:text=""
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/longitude" />
+            app:layout_constraintTop_toBottomOf="@+id/latitute" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -251,7 +251,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="95dp"
             android:layout_marginTop="15dp"
-            android:text=": Feels Like"
+            android:text=":         -"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/textView9"
@@ -264,7 +264,7 @@
             android:layout_marginStart="105dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:text=": Pressure"
+            android:text=":         -"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/Humidity"
@@ -277,7 +277,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="104dp"
             android:layout_marginTop="5dp"
-            android:text=": Humidity"
+            android:text=":         -"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/textView11"
@@ -289,19 +289,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="78dp"
             android:layout_marginTop="5dp"
-            android:text=": Wind Speed"
+            android:text=":         -"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/textView12"
             app:layout_constraintTop_toBottomOf="@+id/Humidity" />
 
         <TextView
-            android:id="@+id/Sunrise"
+            android:id="@+id/sunrise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="117dp"
             android:layout_marginTop="5dp"
-            android:text=": Sunrise"
+            android:text=":         -"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/textView13"
@@ -313,11 +313,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="123dp"
             android:layout_marginTop="5dp"
-            android:text=": Sunset"
+            android:text=":         -"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/textView14"
-            app:layout_constraintTop_toBottomOf="@+id/Sunrise" />
+            app:layout_constraintTop_toBottomOf="@+id/sunrise" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

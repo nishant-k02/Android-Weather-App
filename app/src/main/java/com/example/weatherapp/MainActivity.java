@@ -1,6 +1,5 @@
 package com.example.weatherapp;
 
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -23,16 +22,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 
 public class MainActivity extends AppCompatActivity {
 
     EditText editText;
     Button button;
     ImageView imageView;
-    TextView country_nm, city_nm, temp_vl, descp_nm, longiitude, latitude;
+    TextView country_nm, city_nm, temp_vl, descp_nm, longiitude, latitude, sunrise, sunset, feels_like,pressure, humidity, speed;
 
 
     @Override
@@ -45,10 +41,16 @@ public class MainActivity extends AppCompatActivity {
         country_nm = findViewById(R.id.country);
         city_nm = findViewById(R.id.city);
         longiitude = findViewById(R.id.longitude);
-        latitude = findViewById(R.id.latitude);
+        latitude = findViewById(R.id.latitute);
         temp_vl = findViewById(R.id.temp);
         descp_nm = findViewById(R.id.descp);
         imageView = findViewById(R.id.image);
+        sunrise = findViewById(R.id.sunrise);
+        sunset = findViewById(R.id.Sunset);
+        feels_like = findViewById(R.id.Feels);
+        pressure = findViewById(R.id.Pressure);
+        humidity = findViewById(R.id.Humidity);
+        speed = findViewById(R.id.Wind);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,18 +78,26 @@ public class MainActivity extends AppCompatActivity {
                         String country_find = object1.getString("country");
                         country_nm.setText(country_find);
 
+                        //Finding Sunrise and Sunset
+
+                        String sunrise_tm = object1.getString("sunrise");
+                        sunrise.setText(sunrise_tm);
+
+                        String sunset_tm = object1.getString("sunset");
+                        sunset.setText(sunset_tm);
+
                         //Finding City
                         String city_find = jsonObject.getString("name");
                         city_nm.setText(city_find);
 
                         //Finding Longitude and Latitude
                         JSONObject objectLo = jsonObject.getJSONObject("coord");
-                        String longitude_val = objectLo.getString("lon");
-                        longiitude.setText("Longitude: "+longitude_val);
+                        double longitude_val = objectLo.getDouble("lon");
+                        longiitude.setText("Longitude: "+longitude_val+"° E");
 
                         JSONObject objectLa = jsonObject.getJSONObject("coord");
-                        String latitude_val = objectLa.getString("lat");
-                        latitude.setText("Latitude: "+latitude_val);
+                        double latitude_val = objectLa.getDouble("lat");
+                        latitude.setText("Latitude: "+latitude_val+"° N");
 
 
                         //Finding Description
@@ -95,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject obj1 = jsonArray1.getJSONObject(0);
                         String descp = obj1.getString("description");
                         descp_nm.setText(descp);
-
 
                         //Finding Temperature
                         JSONObject object2 = jsonObject.getJSONObject("main");
@@ -108,6 +117,24 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject obj = jsonArray.getJSONObject(0);
                         String icon = obj.getString("icon");
                         Picasso.get().load("https://openweathermap.org/img/wn/"+icon+"@2x.png").into(imageView);
+
+                        //Finding Feels Like
+                        JSONObject object3 = jsonObject.getJSONObject("main");
+                        int feels_find = object3.getInt("feels_like");
+                        feels_like.setText(feels_find+" °C");
+
+                        //Finding Pressure
+                        double pressure_find = object3.getDouble("pressure");
+                        pressure.setText(pressure_find+" hPa");
+
+                        //Finding Humidity
+                        double humidity_find = object3.getDouble("humidity");
+                        humidity.setText(humidity_find+" %");
+
+                        //Finding Wind Speed
+                        JSONObject object4 = jsonObject.getJSONObject("wind");
+                        double windSpeed_find = object4.getDouble("speed");
+                        speed.setText(windSpeed_find*3.6+" kph");
 
 
 
@@ -129,4 +156,5 @@ public class MainActivity extends AppCompatActivity {
             RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
             requestQueue.add(stringRequest);
         }
+
 }
