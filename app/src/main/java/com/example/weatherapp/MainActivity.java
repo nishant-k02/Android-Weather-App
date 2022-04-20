@@ -3,6 +3,8 @@ package com.example.weatherapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,13 +24,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 
 public class MainActivity extends AppCompatActivity {
 
     EditText editText;
     Button button;
     ImageView imageView;
-    TextView country_nm, city_nm, temp_vl, descp_nm, longiitude, latitude, sunrise, sunset, feels_like,pressure, humidity, speed;
+    TextView country_nm, city_nm,GetTimeAndDate, temp_vl, descp_nm, longiitude, latitude, feels_like,pressure, humidity, speed;
+    Calendar calendar;
+    SimpleDateFormat simpleDateFormat;
+    String Date;
 
 
     @Override
@@ -45,24 +54,48 @@ public class MainActivity extends AppCompatActivity {
         temp_vl = findViewById(R.id.temp);
         descp_nm = findViewById(R.id.descp);
         imageView = findViewById(R.id.image);
-        sunrise = findViewById(R.id.sunrise);
-        sunset = findViewById(R.id.Sunset);
         feels_like = findViewById(R.id.Feels);
         pressure = findViewById(R.id.Pressure);
         humidity = findViewById(R.id.Humidity);
         speed = findViewById(R.id.Wind);
+        GetTimeAndDate = findViewById(R.id.dateTime);
+        calendar = Calendar.getInstance();
+        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy \nKK:mm:ss aaa", Locale.getDefault());
+        Date = simpleDateFormat.format(calendar.getTime());
+
+        editText.addTextChangedListener(textWatcher);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 findWeather();
-
+                GetTimeAndDate.setText(Date);
             }
         });
     }
 
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String CityName = editText.getText().toString().trim();
+            button.setEnabled(!CityName.isEmpty());
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
         public void findWeather()
         {
+
             final String city = editText.getText().toString();
             String url = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid=60d0caa7b17d862079f680198ec596e1";
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -78,13 +111,6 @@ public class MainActivity extends AppCompatActivity {
                         String country_find = object1.getString("country");
                         country_nm.setText(country_find);
 
-                        //Finding Sunrise and Sunset
-
-                        String sunrise_tm = object1.getString("sunrise");
-                        sunrise.setText(sunrise_tm);
-
-                        String sunset_tm = object1.getString("sunset");
-                        sunset.setText(sunset_tm);
 
                         //Finding City
                         String city_find = jsonObject.getString("name");
@@ -93,11 +119,11 @@ public class MainActivity extends AppCompatActivity {
                         //Finding Longitude and Latitude
                         JSONObject objectLo = jsonObject.getJSONObject("coord");
                         double longitude_val = objectLo.getDouble("lon");
-                        longiitude.setText("Longitude: "+longitude_val+"° E");
+                        longiitude.setText(longitude_val+"° E");
 
                         JSONObject objectLa = jsonObject.getJSONObject("coord");
                         double latitude_val = objectLa.getDouble("lat");
-                        latitude.setText("Latitude: "+latitude_val+"° N");
+                        latitude.setText(latitude_val+"° N");
 
 
                         //Finding Description
